@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "./landing.css";
 
 export const metadata: Metadata = {
 	title: "Pay with Crypto",
@@ -7,7 +7,6 @@ export const metadata: Metadata = {
 };
 
 type IProps = Readonly<{ children: React.ReactNode }>
-
 
 export default function RootLayout({ children }: IProps) {
 	return <html>

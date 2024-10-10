@@ -2,12 +2,8 @@ export default function Home() {
 	return (
 		<div>
 			<main>
-				<h1>Main page</h1>
+				<h1>Give users the ability to pay using any crypto they want.</h1>
 			</main>
-
-			<footer>
-				<h2>footer</h2>
-			</footer>
 		</div>
 	);
 }

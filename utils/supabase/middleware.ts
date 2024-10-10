@@ -1,6 +1,9 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
+/**
+	* Exctracted right from the supabase + nextjs template 
+*/
 export const updateSession = async (request: NextRequest) => {
 	// Create an unmodified response
 	let response = NextResponse.next({
@@ -37,13 +40,13 @@ export const updateSession = async (request: NextRequest) => {
 	const user = await supabase.auth.getUser();
 
 	// protected routes
-	if (request.nextUrl.pathname.startsWith("/protected") && user.error) {
+	if (request.nextUrl.pathname.startsWith("/dashboard") && user.error) {
 		return NextResponse.redirect(new URL("/sign-in", request.url));
 	}
 
-	if (request.nextUrl.pathname === "/" && !user.error) {
-		return NextResponse.redirect(new URL("/protected", request.url));
-	}
+	// if (request.nextUrl.pathname === "/" && !user.error) {
+	// 	return NextResponse.redirect(new URL("/protected", request.url));
+	// }
 
 	return response;
 };

@@ -1,0 +1,13 @@
+@import '../globals.css';
+
+nav {
+	display: flex;
+	justify-content: space-between;
+	margin: 20px;
+}
+
+nav div {
+	display: flex;
+	gap: 30px;
+	align-items: center;
+}
