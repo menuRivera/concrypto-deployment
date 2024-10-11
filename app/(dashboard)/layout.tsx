@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import './dashboard.css'
-import Logo from "@/components/ui/logo";
+import Logo from "@/components/logo";
 import LoginButton from "@/components/login-button";
 
 export const metadata: Metadata = {
@@ -10,19 +11,19 @@ export const metadata: Metadata = {
 
 type IProps = Readonly<{ children: React.ReactNode }>
 
-
 export default async function DashboardLayout({ children }: IProps) {
 	return <html>
 		<body>
+			<AppRouterCacheProvider>
+				<nav>
+					<Logo />
+					<LoginButton />
+				</nav>
 
-			<nav>
-				<Logo />
-				<LoginButton />
-			</nav>
-
-			<main>
-				{children}
-			</main>
+				<main>
+					{children}
+				</main>
+			</AppRouterCacheProvider>
 		</body>
 	</html>
 }
