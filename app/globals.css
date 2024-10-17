@@ -7,8 +7,8 @@ body {
 }
 
 body {
-	color: var(--foreground);
-	background: var(--background);
+	color: black;
+	background: white;
 	font-family: "Fira Sans", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -45,4 +45,8 @@ a {
 
 #logo {
 	font-size: 24px;
+}
+
+#cta {
+	/* border-radius: 20px; */
 }

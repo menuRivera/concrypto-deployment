@@ -16,7 +16,7 @@ export default async function DashboardLayout({ children }: IProps) {
 		<body>
 			<AppRouterCacheProvider>
 				<nav>
-					<Logo />
+					<Logo to="/dashboard" />
 					<LoginButton />
 				</nav>
 

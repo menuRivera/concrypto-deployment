@@ -1,9 +1,12 @@
 import Link from "next/link";
 
-export default function Logo() {
+interface IProps {
+	to?: string
+}
+export default function Logo({ to }: IProps) {
 
 	return <div id="logo">
-		<Link href="/">Pay with crypto.</Link>
+		<Link href={to || '/'}>Pay with crypto.</Link>
 	</div>
 
 }

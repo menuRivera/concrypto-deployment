@@ -3,7 +3,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import "./landing.css";
 import Link from "next/link";
 import Logo from "@/components/logo";
-import { Button } from "@mui/material";
+import { Button, Container } from "@mui/material";
 
 export const metadata: Metadata = {
 	title: "Pay with Crypto",
@@ -25,12 +25,14 @@ export default function RootLayout({ children }: IProps) {
 						<Link href="/pricing">Pricing</Link>
 					</div>
 					<div>
-						<Button variant="contained" href="/dashboard">Dashboard</Button>
+						<Button id="cta" variant="contained" href="/dashboard">Dashboard</Button>
 					</div>
 				</nav>
 
 				<main>
-					{children}
+					<Container>
+						{children}
+					</Container>
 				</main>
 
 			</AppRouterCacheProvider>
