@@ -4,14 +4,19 @@ Pay with Crypto is an innovative payment processing platform designed to seamles
 Key features of Pay with Crypto:
 
 - Multi-chain support: Accept payments from popular blockchains like Ethereum, Bitcoin, Solana, and more
-- Extensive cryptocurrency coverage: Enable transactions using Bitcoin, Ethereum, stablecoins, and other major altcoins
 - Easy integration: Simple API and SDK for quick implementation into existing systems
-- Real-time conversion: Instant crypto-to-fiat conversion to protect against market volatility
-- Analytics dashboard: Comprehensive reporting tools for tracking payments and managing cryptocurrency revenue
+- Real-time conversion: Instant fiat-to-crypto conversion to protect against market volatility
 
 With Pay with Crypto, businesses can tap into the growing cryptocurrency market without the complexities of direct blockchain integration. Our platform handles all the technical aspects, allowing you to focus on your core business while offering customers the flexibility to pay with their preferred digital assets.
 
 ## Components 
 ### Dashbaord 
-### Payment UI
+A dashboard for users to manage their connected wallets as well as their api keys
 
+### Payment UI
+A UI for people to pay using crypto
+
+## Todo
+- [x] Api key creation
+- [ ] Api key management
+- [ ] POST /api/session endpoint (to handle create session requests from the sdk)
