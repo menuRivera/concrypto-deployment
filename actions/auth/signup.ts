@@ -8,13 +8,8 @@ export const signUpAction = async (formData: FormData) => {
 	const origin = headers().get("origin");
 	const supabase = createClient();
 
-	const email = formData.get("email")?.toString();
-	const password = formData.get("password")?.toString();
-
-
-	if (!email || !password) {
-		return { error: "Email and password are required" };
-	}
+	const email = formData.get("email")?.toString()!;
+	const password = formData.get("password")?.toString()!;
 
 	const { error } = await supabase.auth.signUp({
 		email,

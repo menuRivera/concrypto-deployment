@@ -1,16 +1,14 @@
-import { useUser } from "@/hooks/use-user"
+import { createClient } from "@/utils/supabase/server"
 import Link from "next/link"
 
 export default async function LoginButton() {
-	const user = await useUser()
+	const supabase = createClient()
+
+	const { data: { user } } = await supabase.auth.getUser()
 
 	// render a login/signup button if no user
-	// if (!user) return <div style={{ display: 'flex' }}>
-	return <div style={{ display: 'flex' }}>
-		<Link href="/dashboard/sign-in">Sign in</Link>
-		<Link href="/dashboard/sign-up">Sign up</Link>
-	</div>
+	if (!user) return null
 
 	// else, render the profile button
-	// return <Link href='/dashboard/profile'>Hello, {user.email}</Link>
+	return <Link href='/dashboard/profile'>Hello, {user.email}</Link>
 }

@@ -3,6 +3,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import './dashboard.css'
 import Logo from "@/components/logo";
 import LoginButton from "@/components/login-button";
+import { Container } from "@mui/material";
 
 export const metadata: Metadata = {
 	title: "Dashboard | Pay with Crypto",
@@ -21,7 +22,9 @@ export default async function DashboardLayout({ children }: IProps) {
 				</nav>
 
 				<main>
-					{children}
+					<Container>
+						{children}
+					</Container>
 				</main>
 			</AppRouterCacheProvider>
 		</body>
