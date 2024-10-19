@@ -4,6 +4,7 @@ import './dashboard.css'
 import Logo from "@/components/logo";
 import LoginButton from "@/components/login-button";
 import { Container } from "@mui/material";
+import FeedbackToast from "@/components/dashboard/feedback-toast";
 
 export const metadata: Metadata = {
 	title: "Dashboard | Pay with Crypto",
@@ -26,6 +27,7 @@ export default async function DashboardLayout({ children }: IProps) {
 						{children}
 					</Container>
 				</main>
+				<FeedbackToast />
 			</AppRouterCacheProvider>
 		</body>
 	</html>

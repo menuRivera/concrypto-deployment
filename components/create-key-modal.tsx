@@ -18,7 +18,7 @@ export default function CreateKeyModal() {
 				<DialogTitle>Create a new api key</DialogTitle>
 
 				<DialogContent>
-					<TextField autoFocus required name="label" label="Label for your new api key" fullWidth variant="standard" />
+					<TextField sx={{ margin: '16px 0' }} autoFocus required name="label" label="Label for your new api key" fullWidth variant="outlined" />
 				</DialogContent>
 
 				<DialogActions>

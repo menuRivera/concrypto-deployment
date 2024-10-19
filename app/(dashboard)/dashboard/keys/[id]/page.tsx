@@ -1,4 +1,6 @@
 import { deleteKey } from "@/actions/api-keys/delete-key"
+import ChainSelector from "@/components/chain-selector"
+import ChainTable from "@/components/chain-table"
 import { ApiKey } from "@/types/api-key"
 import { createClient } from "@/utils/supabase/server"
 import { Button } from "@mui/material"
@@ -30,11 +32,12 @@ export default async function ManageKeyPage({ params }: IProps) {
 		<div><strong>Key: </strong> {key.key}</div>
 
 		<h2 style={{ marginTop: '16px' }}>Chains</h2>
-		<p>Here would be rendered a list of your connected chains and accounts</p>
+		{/* <ChainSelector apiKey={key} /> */}
+		<ChainTable apiKey={key} />
 
 		<form action={deleteKey}>
 			<input type="text" value={key.id} name="id" hidden readOnly />
-			<Button type="submit" color="error" variant="contained" sx={{ marginTop: '16px' }}>Delete</Button>
+			<Button type="submit" color="error" variant="contained" sx={{ marginTop: '8px' }}>Delete</Button>
 		</form>
 	</div>
 }

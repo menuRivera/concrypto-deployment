@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server"
 import { Box, Paper, Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material"
-import CreateKeyModal from "./create-key-modal"
+import CreateKeyModal from "../create-key-modal"
 
 /** 
 	* retrieve all api keys	and renders them in a table
@@ -25,7 +25,7 @@ export default async function ApiKeys() {
 	return <Box>
 		<Paper>
 			<Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-				<Typography variant="h6">Api keys</Typography>
+				<Typography variant="h6">API keys</Typography>
 				<CreateKeyModal />
 			</Toolbar>
 

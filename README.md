@@ -19,4 +19,5 @@ A UI for people to pay using crypto
 ## Todo
 - [x] Api key creation
 - [ ] Api key management
+    - [ ] chains selection
 - [ ] POST /api/session endpoint (to handle create session requests from the sdk)
