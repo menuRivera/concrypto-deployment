@@ -3,7 +3,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress, TextField } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add'
 import { useState } from "react"
-import { createKey } from "@/actions/dashboard/create-key"
+import { createKey } from "@/actions/api-keys/create-key"
 
 export default function CreateKeyModal() {
 	const [open, setOpen] = useState<boolean>(false)
