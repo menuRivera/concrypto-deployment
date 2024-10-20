@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import "./landing.css";
+import './payment.css'
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import { Container } from "@mui/material";
+import FeedbackToast from "@/components/dashboard/feedback-toast";
 
 export const metadata: Metadata = {
 	title: "Pay with Crypto",
@@ -8,10 +11,17 @@ export const metadata: Metadata = {
 
 type IProps = Readonly<{ children: React.ReactNode }>
 
-export default function RootLayout({ children }: IProps) {
+export default async function PaymentLayout({ children }: IProps) {
 	return <html>
 		<body>
-			{children}
+			<AppRouterCacheProvider>
+				<main>
+					<Container>
+						{children}
+					</Container>
+				</main>
+				<FeedbackToast />
+			</AppRouterCacheProvider>
 		</body>
 	</html>
 }
