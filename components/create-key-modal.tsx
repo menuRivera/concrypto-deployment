@@ -11,7 +11,7 @@ export default function CreateKeyModal() {
 
 
 	return <>
-		<Button variant="contained" onClick={() => setOpen(true)} endIcon={<AddIcon />}>Create new</Button>
+		<Button variant="contained" onClick={() => setOpen(true)} startIcon={<AddIcon />}>Create new</Button>
 		<Dialog open={open} onClose={() => setOpen(false)} fullWidth >
 
 			<form action={createKey} onSubmit={() => setLoading(true)}>

@@ -1,9 +1,8 @@
 import { deleteKey } from "@/actions/api-keys/delete-key"
-import ChainSelector from "@/components/chain-selector"
 import ChainTable from "@/components/chain-table"
 import { ApiKey } from "@/types/api-key"
 import { createClient } from "@/utils/supabase/server"
-import { Button } from "@mui/material"
+import { Button, Paper } from "@mui/material"
 
 interface IProps {
 	params: {
@@ -25,19 +24,19 @@ export default async function ManageKeyPage({ params }: IProps) {
 	if (error) return <pre>{error.message}</pre>
 
 	return <div>
-		<h1>Manage key</h1>
-		<h2 style={{ marginTop: '16px' }}>Basic info</h2>
-		<div><strong>Label: </strong> {key.label}</div>
-		<div><strong>Created at: </strong> {new Date(key.created_at).toLocaleString()}</div>
-		<div><strong>Key: </strong> {key.key}</div>
+		<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+			<h1>{key.label} key</h1>
+			<form action={deleteKey}>
+				<input type="text" value={key.id} name="id" hidden readOnly />
+				<Button type="submit" color="error" variant="outlined" sx={{ marginTop: '8px' }}>Delete key</Button>
+			</form>
+		</div>
+		<Paper sx={{ padding: '24px', margin: '16px 0' }}>
+			<div><strong>Created at: </strong> {new Date(key.created_at).toLocaleString()}</div>
+			<div><strong>Key: </strong> {key.key}</div>
+		</Paper>
 
-		<h2 style={{ marginTop: '16px' }}>Chains</h2>
-		{/* <ChainSelector apiKey={key} /> */}
 		<ChainTable apiKey={key} />
 
-		<form action={deleteKey}>
-			<input type="text" value={key.id} name="id" hidden readOnly />
-			<Button type="submit" color="error" variant="contained" sx={{ marginTop: '8px' }}>Delete</Button>
-		</form>
 	</div>
 }

@@ -7,9 +7,7 @@ export const toggleAddress = async (addressId: number, newValue: boolean) => {
 	const supabase = createClient()
 	const { error } = await supabase
 		.from('addresses')
-		.update({
-			active: newValue
-		})
+		.update({ active: newValue })
 		.eq('id', addressId)
 
 	if (error) console.log(error)

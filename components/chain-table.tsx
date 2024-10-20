@@ -1,10 +1,11 @@
 import { Address } from "@/types/addresses";
 import { ApiKey } from "@/types/api-key";
 import { createClient } from "@/utils/supabase/server";
-import { Box, Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
 import CreateAddressModal from "./create-address-modal";
 import { Chain } from "@/types/chains";
 import AddressSwitch from "./address-switch";
+import ModifyAddressModal from "./modify-address-modal";
 
 interface IProps {
 	apiKey: ApiKey
@@ -18,10 +19,7 @@ export default async function ChainTable({ apiKey }: IProps) {
 
 	const { data: addresses } = await supabase
 		.from('addresses')
-		.select(`
-				*,
-				chain:chain_id(*)
-			`)
+		.select(` *, chain:chain_id(*) `)
 		.eq('key_id', apiKey.id)
 		.order('id', { ascending: true })
 		.returns<AddressWithChain[]>()
@@ -32,8 +30,6 @@ export default async function ChainTable({ apiKey }: IProps) {
 		.returns<Chain[]>()
 
 	const chains = allChains?.filter(c => !addresses?.find(a => a.chain_id === c.id))
-
-	console.log({ addresses })
 
 	return <Box>
 		<Paper>
@@ -64,7 +60,10 @@ export default async function ChainTable({ apiKey }: IProps) {
 								</TableCell>
 								<TableCell>{a.chain.name}</TableCell>
 								<TableCell>{a.address}</TableCell>
-								<TableCell>Delete or something idk</TableCell>
+								<TableCell align="right">
+									{/* modify address */}
+									<ModifyAddressModal address={a} chain={a.chain} />
+								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>

@@ -26,12 +26,14 @@ export default function CreateAddressModal({ chains, apiKey }: IProps) {
 		}
 	}, [params])
 
+	if (chains.length == 0) return null
+
 	return <>
-		<Button variant="contained" onClick={() => setOpen(true)} endIcon={<AddIcon />}>Add a new chain</Button>
+		<Button variant="contained" onClick={() => setOpen(true)} startIcon={<AddIcon />}>Add new chain</Button>
 		<Dialog open={open} onClose={() => setOpen(false)} fullWidth >
 
 			<form action={createAddress} onSubmit={() => setLoading(true)}>
-				<DialogTitle>Add a new chain</DialogTitle>
+				<DialogTitle>Add new chain</DialogTitle>
 
 				<DialogContent sx={{ margin: '16px 0' }}>
 					<input name="key-id" type="text" value={apiKey.id} hidden />
