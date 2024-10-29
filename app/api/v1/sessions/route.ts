@@ -15,6 +15,7 @@ const bodySchema = z.object({
 		description: z.string().optional(),
 		media: z.string().optional(),
 		unit_price: z.number(),
+		quantity: z.number()
 	})),
 	metadata: z.any().optional(),
 	urls: z.object({
@@ -29,7 +30,7 @@ const bodySchema = z.object({
 export async function POST(request: NextRequest) {
 	const supabase = createClient()
 	try {
-		const key = headers().get('x-auth-token') as string
+		const key = headers().get('x-api-key') as string
 
 		if (!key) throw { status: 401, message: 'No API key found' }
 

@@ -16,7 +16,7 @@ export default async function PaymentLayout({ children }: IProps) {
 		<body>
 			<AppRouterCacheProvider>
 				<main>
-					<Container>
+					<Container sx={{ marginTop: '10vh' }}>
 						{children}
 					</Container>
 				</main>
