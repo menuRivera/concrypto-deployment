@@ -39,6 +39,6 @@ export default function ChainPortal({ addresses }: IProps) {
 			))}
 		</Select>
 
-		<WalletConnection />
+		<WalletConnection chain={chain} />
 	</Card>
 }

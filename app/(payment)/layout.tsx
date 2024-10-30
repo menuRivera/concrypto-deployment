@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import '@near-wallet-selector/modal-ui/styles.css'
 import './payment.css'
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { Container } from "@mui/material";
