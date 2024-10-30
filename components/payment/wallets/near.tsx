@@ -1,6 +1,6 @@
 'use client'
 
-import HoverableButton from "@/components/common/HoverableButton";
+import HoverableButton from "@/components/common/hoverable-button";
 import { useNearWalletSelector } from "@/hooks/use-near-wallet-selector";
 import { Chain } from "@/types/chains";
 import { Box, Button, LinearProgress } from "@mui/material";
@@ -32,6 +32,6 @@ export default function Near({ chain }: IProps) {
 			afterHoverColor="error"
 		/>
 
-		<Button variant="contained">Pay with crypto</Button>
+		<Button variant="contained">Pay</Button>
 	</Box >
 }

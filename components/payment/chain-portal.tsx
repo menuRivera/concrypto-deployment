@@ -1,8 +1,8 @@
 'use client'
 
 import { Chain } from "@/types/chains";
-import { Card, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { useMemo, useState } from "react";
+import { Card, LinearProgress, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
 import Evm from "./wallets/evm";
 import Near from "./wallets/near";
 import { AddressWithChain } from "@/types/addresses";
@@ -12,11 +12,19 @@ interface IProps {
 }
 export default function ChainPortal({ addresses }: IProps) {
 	const chains = addresses.map(a => a.chain)
-
 	const [chain, setChain] = useState<Chain>(chains[0])
+	const [loading, setLoading] = useState<boolean>(true)
+
+	useEffect(() => {
+		const chainId = localStorage.getItem('pwc-chain-id')
+		if (chainId) setChain(chains.find(c => c.id.toString() == chainId)!)
+		setLoading(false)
+	}, [])
 
 	const handleChainSelection = (e: SelectChangeEvent) => {
-		setChain(chains.find(c => c.id.toString() == e.target.value)!)
+		const chainId = e.target.value
+		setChain(chains.find(c => c.id.toString() == chainId)!)
+		localStorage.setItem('pwc-chain-id', chainId)
 	}
 
 	const WalletConnection = useMemo(() => {
@@ -31,6 +39,11 @@ export default function ChainPortal({ addresses }: IProps) {
 		}
 	}, [chain])
 
+
+	if (loading) return <Card sx={{ width: '100%', display: 'flex', padding: '8px', gap: '8px', flexDirection: 'column' }}>
+		<LinearProgress />
+	</Card>
+
 	return <Card sx={{ width: '100%', display: 'flex', padding: '8px', gap: '8px', flexDirection: 'column' }}>
 
 		<Select variant="outlined" value={chain.id.toString()} onChange={handleChainSelection}>
@@ -39,6 +52,10 @@ export default function ChainPortal({ addresses }: IProps) {
 			))}
 		</Select>
 
+		{/*
+			todo: rerender on chain selection
+			(same sdk doesn't cause a rerender)
+		*/}
 		<WalletConnection chain={chain} />
 	</Card>
 }

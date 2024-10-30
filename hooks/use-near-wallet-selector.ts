@@ -26,6 +26,7 @@ export const useNearWalletSelector = (network: 'testnet' | 'mainnet') => {
 				setupMeteorWallet()
 			]
 		})
+
 		_selector.on('signedOut', () => {
 			setAccount(null)
 			setWallet(null)
@@ -35,6 +36,7 @@ export const useNearWalletSelector = (network: 'testnet' | 'mainnet') => {
 
 		setSelector(_selector)
 		setModal(_modal)
+
 		if (_selector.isSignedIn()) {
 			const _wallet = await _selector.wallet()
 			setWallet(_wallet)
