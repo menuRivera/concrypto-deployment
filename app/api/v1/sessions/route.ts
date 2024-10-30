@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 const bodySchema = z.object({
-	key_id: z.number(),
+	// key_id: z.number(),
 	title: z.string(),
 	// amount: z.number(), //total amount will be calculated based on items.unitPrice and currency fields
 	currency: z.string(),
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
 		const slug = nanoid()
 		const { data, error } = await supabase
 			.from('sessions')
-			.insert({ slug, ...body })
+			.insert({ slug, key_id: apiKey.id, ...body })
 			.select()
 			.single()
 

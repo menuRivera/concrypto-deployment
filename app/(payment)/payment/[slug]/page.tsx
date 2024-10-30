@@ -1,16 +1,11 @@
 import ItemList from "@/components/payment/item-list"
-import WalletPortal from "@/components/payment/wallet-portal"
-import { Address } from "@/types/addresses"
-import { Chain } from "@/types/chains"
+import ChainPortal from "@/components/payment/chain-portal"
+import { AddressWithChain } from "@/types/addresses"
 import { Session } from "@/types/session"
 import { createClient } from "@/utils/supabase/server"
 import { Box, Typography } from "@mui/material"
 import Grid from "@mui/material/Grid2"
 import { notFound } from "next/navigation"
-
-interface AddressWithChain extends Address {
-	chain: Chain
-}
 
 export default async function SessionUI({ params }: { params: { slug: string } }) {
 	const supabase = createClient()
@@ -29,13 +24,7 @@ export default async function SessionUI({ params }: { params: { slug: string } }
 		.eq('key_id', session.key_id)
 		.returns<AddressWithChain[]>()
 
-	const { data: chains } = await supabase
-		.from('chains')
-		.select()
-		.returns<Chain[]>()
-
-	// todo: change this
-	if (!chains) return notFound()
+	if (!addresses) return notFound()
 
 	return <>
 		<Typography variant="h2">{session.title}</Typography>
@@ -45,7 +34,7 @@ export default async function SessionUI({ params }: { params: { slug: string } }
 			</Grid>
 			<Grid size={6}>
 				<Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-					<WalletPortal chains={chains} />
+					<ChainPortal addresses={addresses} />
 				</Box>
 			</Grid>
 		</Grid>
