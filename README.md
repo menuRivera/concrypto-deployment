@@ -23,3 +23,4 @@ A UI for people to pay using crypto
     - [x] chains selection
 - [x] POST /api/session endpoint (to handle create session requests from the sdk)
 - [ ] Integrate all major chains (at least evm and near) wallet connections to the payment ui 
+- [ ] Add session_type field on dashboard

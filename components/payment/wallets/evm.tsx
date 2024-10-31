@@ -1,14 +1,17 @@
 'use client'
 
 import { useEvmWallet } from "@/hooks/use-evm-wallet";
-import { Chain } from "@/types/chains";
+import { AddressWithChain } from "@/types/addresses";
+import { Session } from "@/types/session";
 import { Box, Button, CircularProgress } from "@mui/material";
 
 interface IProps {
-	chain: Chain
+	total: number,
+	address: AddressWithChain,
+	session: Session
 }
-export default function Evm({ chain }: IProps) {
-	const { provider, signer, shortAddress } = useEvmWallet(chain)
+export default function Evm({ address, total }: IProps) {
+	const { provider, signer, shortAddress } = useEvmWallet(address.chain)
 
 	const handleConnectWallet = async () => {
 		await provider?.getSigner()

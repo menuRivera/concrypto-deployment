@@ -17,14 +17,23 @@ export default async function SessionUI({ params }: { params: { slug: string } }
 		.single<Session>()
 
 	if (!session) return notFound()
+	if (session.paid) return <div>
+		<h1>This session has already been paid</h1>
+	</div>
 
-	const { data: addresses } = await supabase
+	const chainType = session.session_type == 'development' ? 'testnet' : 'mainnet'
+
+	const { data: add } = await supabase
 		.from('addresses')
 		.select(`*, chain:chain_id(*)`)
 		.eq('key_id', session.key_id)
+		.order('chain(name)')
 		.returns<AddressWithChain[]>()
 
-	if (!addresses) return notFound()
+	if (!add) return notFound()
+
+
+	const addresses = add.filter(a => a.chain.type == chainType)
 
 	return <>
 		<Typography variant="h2">{session.title}</Typography>
@@ -34,7 +43,7 @@ export default async function SessionUI({ params }: { params: { slug: string } }
 			</Grid>
 			<Grid size={6}>
 				<Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-					<ChainPortal addresses={addresses} />
+					<ChainPortal session={session} addresses={addresses} />
 				</Box>
 			</Grid>
 		</Grid>

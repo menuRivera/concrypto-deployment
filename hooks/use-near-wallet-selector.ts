@@ -5,32 +5,31 @@ import { setupWalletSelector, Wallet, WalletSelector } from '@near-wallet-select
 import { setupModal, WalletSelectorModal } from "@near-wallet-selector/modal-ui"
 import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet"
 import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet"
+import { Chain } from "@/types/chains"
 
-export const useNearWalletSelector = (network: 'testnet' | 'mainnet') => {
+export const useNearWalletSelector = (chain: Chain) => {
 	const [loading, setLoading] = useState<boolean>(true)
 
 	const [selector, setSelector] = useState<WalletSelector | null>(null)
 	const [modal, setModal] = useState<WalletSelectorModal | null>(null)
 	const [wallet, setWallet] = useState<Wallet | null>(null)
-	const [account, setAccount] = useState<string | null>()
+	const [account, setAccount] = useState<string | null>(null)
 
 	useEffect(() => {
+		reset()
 		setupSelector()
-	}, [])
+	}, [chain.id])
 
 	const setupSelector = async () => {
 		const _selector = await setupWalletSelector({
-			network,
+			network: chain.type,
 			modules: [
 				setupMyNearWallet(),
 				setupMeteorWallet()
 			]
 		})
 
-		_selector.on('signedOut', () => {
-			setAccount(null)
-			setWallet(null)
-		})
+		_selector.on('signedOut', reset)
 
 		const _modal = setupModal(_selector, { contractId: '' })
 
@@ -46,6 +45,11 @@ export const useNearWalletSelector = (network: 'testnet' | 'mainnet') => {
 		}
 
 		setLoading(false)
+	}
+
+	const reset = () => {
+		setAccount(null)
+		setWallet(null)
 	}
 
 	return {

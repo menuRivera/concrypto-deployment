@@ -2,17 +2,98 @@
 
 import HoverableButton from "@/components/common/hoverable-button";
 import { useNearWalletSelector } from "@/hooks/use-near-wallet-selector";
-import { Chain } from "@/types/chains";
+import { AddressWithChain } from "@/types/addresses";
+import { utils } from 'near-api-js'
 import { Box, Button, LinearProgress } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { getMainnetRpcProvider, getTestnetRpcProvider } from "@near-js/client";
+import { Session } from "@/types/session";
 
 interface IProps {
-	chain: Chain
+	total: number,
+	address: AddressWithChain,
+	session: Session
 }
-export default function Near({ chain }: IProps) {
-	const { modal, loading, account, wallet } = useNearWalletSelector(chain.type)
+export default function Near({ address, total, session }: IProps) {
+	const searchParams = useSearchParams()
+	const { modal, loading: selectorLoading, account, wallet } = useNearWalletSelector(address.chain)
+	const [totalInYocto, setTotalInYocto] = useState<string | null>(null)
+	const [loading, setLoading] = useState<boolean>(true)
+
+	useEffect(() => {
+		if (!totalInYocto) fetchNearPrice()
+		else checkTxResult()
+	}, [account, totalInYocto])
+
+	const checkTxResult = async () => {
+		if (!account) return
+		if (!totalInYocto) return
+
+		// check the url for tx result
+		// url.com/slug?transactionHashes=H2K2bfGagdP4Kt3cSiRf53FvM6A16otQLGy6nrGHeGtk
+		const transactionHash = searchParams.get('transactionHashes')
+		if (!transactionHash) return setLoading(false)
+
+		const rpcProvider = address.chain.type === 'mainnet'
+			? getMainnetRpcProvider()
+			: getTestnetRpcProvider()
+
+		const result = await rpcProvider.getTransaction({
+			account: account,
+			transactionHash
+		})
+
+		const transferred = result.transaction.actions[0].Transfer.deposit as string
+
+		const transferredNear = utils.format.formatNearAmount(transferred)
+		const totalInNear = utils.format.formatNearAmount(totalInYocto)
+
+		const equal = Math.abs(Number(transferredNear) - Number(totalInNear)) < 0.05
+
+		if (equal) {
+			// success!
+			// mark session as successfully paid
+			// redirect user to the success page
+			alert('Successfully paid the session')
+		}
+
+		setLoading(false)
+	}
+
+	const fetchNearPrice = async () => {
+		const nearToken = await (await fetch(`https://indexer.ref.finance/get-token-price?token_id=wrap.near`)).json()
+		// setNearPrice(parseFloat(nearToken.price))
+		const yoctoAmount = utils.format.parseNearAmount((total / parseFloat(nearToken.price)).toString())
+		if (!yoctoAmount) throw new Error('Idk, no yoctoAmount')
+		setTotalInYocto(yoctoAmount)
+	}
+
+	const handlePayment = async () => {
+		if (!wallet) return
+		if (!totalInYocto) return
+
+		try {
+			await wallet.signAndSendTransaction({
+				receiverId: address.address,
+				actions: [
+					{
+						type: 'Transfer',
+						params: {
+							deposit: totalInYocto
+						}
+					}
+				]
+			})
+
+			alert('Successfully sent money!')
+		} catch (e) {
+			console.error(e)
+		}
+	}
 
 	// loading state
-	if (loading) return <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+	if (selectorLoading || loading) return <Box sx={{ display: 'flex', flexDirection: 'column' }}>
 		<LinearProgress />
 	</Box>
 
@@ -32,6 +113,6 @@ export default function Near({ chain }: IProps) {
 			afterHoverColor="error"
 		/>
 
-		<Button variant="contained">Pay</Button>
+		<Button variant="contained" onClick={handlePayment}>Pay ${total}</Button>
 	</Box >
 }

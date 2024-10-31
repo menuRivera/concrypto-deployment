@@ -1,34 +1,36 @@
 'use client'
 
-import { Chain } from "@/types/chains";
 import { Card, LinearProgress, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import Evm from "./wallets/evm";
 import Near from "./wallets/near";
 import { AddressWithChain } from "@/types/addresses";
+import { Session } from "@/types/session";
 
 interface IProps {
-	addresses: AddressWithChain[]
+	addresses: AddressWithChain[],
+	session: Session
 }
-export default function ChainPortal({ addresses }: IProps) {
-	const chains = addresses.map(a => a.chain)
-	const [chain, setChain] = useState<Chain>(chains[0])
+export default function ChainPortal({ addresses, session }: IProps) {
+	const total: number = session.items.reduce((prev, curr, _index) => (curr.unit_price * curr.quantity) + prev, 0)
+
+	const [address, setAddress] = useState<AddressWithChain>(addresses[0])
 	const [loading, setLoading] = useState<boolean>(true)
 
 	useEffect(() => {
-		const chainId = localStorage.getItem('pwc-chain-id')
-		if (chainId) setChain(chains.find(c => c.id.toString() == chainId)!)
+		const addressId = localStorage.getItem(`pwc-address-id-${session.id}`)
+		if (addressId) setAddress(addresses.find(a => a.id === Number(addressId))!)
 		setLoading(false)
 	}, [])
 
-	const handleChainSelection = (e: SelectChangeEvent) => {
-		const chainId = e.target.value
-		setChain(chains.find(c => c.id.toString() == chainId)!)
-		localStorage.setItem('pwc-chain-id', chainId)
+	const handleAddressSelection = (e: SelectChangeEvent) => {
+		const addressId = e.target.value
+		setAddress(addresses.find(a => a.id === Number(addressId))!)
+		localStorage.setItem(`pwc-address-id-${session.id}`, addressId)
 	}
 
 	const WalletConnection = useMemo(() => {
-		switch (chain.sdk) {
+		switch (address.chain.sdk) {
 			case 'evm':
 				return Evm;
 			case 'near':
@@ -37,7 +39,8 @@ export default function ChainPortal({ addresses }: IProps) {
 				// this should never run
 				return Evm;
 		}
-	}, [chain])
+	}, [address])
+
 
 
 	if (loading) return <Card sx={{ width: '100%', display: 'flex', padding: '8px', gap: '8px', flexDirection: 'column' }}>
@@ -46,9 +49,9 @@ export default function ChainPortal({ addresses }: IProps) {
 
 	return <Card sx={{ width: '100%', display: 'flex', padding: '8px', gap: '8px', flexDirection: 'column' }}>
 
-		<Select variant="outlined" value={chain.id.toString()} onChange={handleChainSelection}>
-			{chains.map((c, i) => (
-				<MenuItem key={i} value={c.id}>{c.name}</MenuItem>
+		<Select variant="outlined" value={address.id.toString()} onChange={handleAddressSelection}>
+			{addresses.map((a, i) => (
+				<MenuItem key={i} value={a.id}>{a.chain.name}</MenuItem>
 			))}
 		</Select>
 
@@ -56,6 +59,6 @@ export default function ChainPortal({ addresses }: IProps) {
 			todo: rerender on chain selection
 			(same sdk doesn't cause a rerender)
 		*/}
-		<WalletConnection chain={chain} />
+		<WalletConnection total={total} address={address} session={session} />
 	</Card>
 }
