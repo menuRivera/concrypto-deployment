@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { getMainnetRpcProvider, getTestnetRpcProvider } from "@near-js/client";
 import { Session } from "@/types/session";
+import { setSessionPaid } from "@/actions/sessions/set-session-paid";
 
 interface IProps {
 	total: number,
@@ -49,13 +50,15 @@ export default function Near({ address, total, session }: IProps) {
 		const transferredNear = utils.format.formatNearAmount(transferred)
 		const totalInNear = utils.format.formatNearAmount(totalInYocto)
 
-		const equal = Math.abs(Number(transferredNear) - Number(totalInNear)) < 0.05
+		const diff = Math.abs(Number(transferredNear) - Number(totalInNear))
+		const equal = diff < 0.05
 
 		if (equal) {
 			// success!
 			// mark session as successfully paid
 			// redirect user to the success page
-			alert('Successfully paid the session')
+			console.log('Payment successful...')
+			await setSessionPaid(address.chain_id, transactionHash, session.id)
 		}
 
 		setLoading(false)
@@ -63,7 +66,6 @@ export default function Near({ address, total, session }: IProps) {
 
 	const fetchNearPrice = async () => {
 		const nearToken = await (await fetch(`https://indexer.ref.finance/get-token-price?token_id=wrap.near`)).json()
-		// setNearPrice(parseFloat(nearToken.price))
 		const yoctoAmount = utils.format.parseNearAmount((total / parseFloat(nearToken.price)).toString())
 		if (!yoctoAmount) throw new Error('Idk, no yoctoAmount')
 		setTotalInYocto(yoctoAmount)
