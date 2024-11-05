@@ -32,9 +32,10 @@ export const setSessionPaid = async (chainId: number, txHash: string, sessionId:
 	if (!session) return encodedRedirect('error', pathname, 'No session found')
 
 	const params = new URLSearchParams()
-	params.set('success', 'true')
 	params.set('chainId', chainId.toString())
 	params.set('txHash', txHash)
+
+	// webhook call?
 
 	return redirect(`${session.urls.success}?${params.toString()}`)
 }
