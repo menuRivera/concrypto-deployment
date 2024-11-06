@@ -20,7 +20,7 @@ export default function RootLayout({ children }: IProps) {
 				<nav>
 					<Logo />
 					<div>
-						<Link href="/about">About us</Link>
+						<Link href="/about-us">About us</Link>
 						<Link href="/how-it-works">How it works</Link>
 						<Link href="/pricing">Pricing</Link>
 					</div>
