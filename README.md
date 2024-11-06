@@ -27,8 +27,9 @@ A UI for people to pay using crypto
 - [ ] Wallets (react components)
     - [ ] evm
         - [x] Validate tx
-        - [ ] Fix the change-chain flow @ `use-evm-wallet.ts` hook
+        - [x] Fix the change-chain flow @ `use-evm-wallet.ts` hook
+        - [ ] fix the add chain flow (not urgent)
         - [ ] Custom tokens
-    - [x] Near testnet
+    - [x] Near
         - [x] Validate tx
         - [ ] Custom tokens
