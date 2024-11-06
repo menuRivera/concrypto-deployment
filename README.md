@@ -22,5 +22,13 @@ A UI for people to pay using crypto
 - [x] Api key management
     - [x] chains selection
 - [x] POST /api/session endpoint (to handle create session requests from the sdk)
-- [ ] Integrate all major chains (at least evm and near) wallet connections to the payment ui 
+- [ ] Notification webhook 
 - [ ] Add session_type field on dashboard
+- [ ] Wallets (react components)
+    - [ ] evm
+        - [x] Validate tx
+        - [ ] Fix the change-chain flow @ `use-evm-wallet.ts` hook
+        - [ ] Custom tokens
+    - [x] Near testnet
+        - [x] Validate tx
+        - [ ] Custom tokens

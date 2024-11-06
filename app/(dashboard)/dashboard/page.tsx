@@ -6,8 +6,5 @@ export default async function Dashboard() {
 		<h1 style={{ marginBottom: '16px' }}>Dashboard</h1>
 
 		<ApiKeys />
-
-		{/* 1. create api keys */}
-		{/* 2. delete api keys */}
 	</Box>
 }

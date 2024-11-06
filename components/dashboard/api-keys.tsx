@@ -47,7 +47,7 @@ export default async function ApiKeys() {
 							<TableRow key={i}>
 								<TableCell>{new Date(k.created_at).toLocaleString()}</TableCell>
 								<TableCell>{k.label}</TableCell>
-								<TableCell>{k.key}</TableCell>
+								<TableCell sx={{cursor: 'pointer'}} >{k.key}</TableCell>
 								<TableCell align="right"><Button href={`/dashboard/keys/${k.id}`}>Manage</Button></TableCell>
 							</TableRow>
 						))}

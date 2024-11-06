@@ -15,7 +15,7 @@ interface IProps {
 	session: Session
 }
 export default function Evm({ address, total, session }: IProps) {
-	const { provider, signer, shortAddress } = useEvmWallet(address.chain)
+	const { provider, signer, shortAddress, walletLoading } = useEvmWallet(address.chain)
 	const [loading, setLoading] = useState<boolean>(false)
 	const [etherPrice, setEtherPrice] = useState<number | null>(null)
 
@@ -67,7 +67,7 @@ export default function Evm({ address, total, session }: IProps) {
 	}
 
 	// loading state
-	if (loading) return <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+	if (walletLoading || loading) return <Box sx={{ display: 'flex', flexDirection: 'column' }}>
 		<LinearProgress />
 	</Box>
 
