@@ -1,4 +1,4 @@
-# Pay with crypto
+# concrypto
 Pay with Crypto is an innovative payment processing platform designed to seamlessly integrate cryptocurrency payments into any business model. Our service functions similarly to Stripe, but with a focus on supporting a wide range of cryptocurrencies across multiple blockchain networks.
 
 Key features of Pay with Crypto:

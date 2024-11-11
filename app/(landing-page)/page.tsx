@@ -13,7 +13,7 @@ export default function Home() {
 			fontWeight: 500,
 			fontSize: '64px'
 		}}>
-			Pay with crypto.
+			ConCrypto.
 		</h1>
 
 		<p style={{

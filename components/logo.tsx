@@ -6,7 +6,7 @@ interface IProps {
 export default function Logo({ to }: IProps) {
 
 	return <div id="logo">
-		<Link href={to || '/'}>Pay with crypto.</Link>
+		<Link href={to || '/'}>ConCrypto.</Link>
 	</div>
 
 }
