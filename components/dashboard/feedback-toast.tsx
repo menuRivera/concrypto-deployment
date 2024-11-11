@@ -2,9 +2,9 @@
 
 import { Alert, Snackbar } from "@mui/material"
 import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 
-export default function FeedbackToast() {
+function FeedbackToastComp() {
 	const params = useSearchParams()
 
 	const [error, setError] = useState<string | null>(null)
@@ -23,4 +23,11 @@ export default function FeedbackToast() {
 	else if (success) return <Snackbar open={!!success} autoHideDuration={5000} onClose={() => setSuccess(null)}>
 		<Alert onClose={() => setSuccess(null)} severity="success" variant="filled" sx={{ width: '100%' }}>{success}</Alert>
 	</Snackbar>
+}
+
+export default function FeedbackToast() {
+	return <Suspense fallback={null}>
+		<FeedbackToastComp />
+	</Suspense>
+
 }

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
+	const searchParams = request.nextUrl.searchParams
 	try {
-		const searchParams = request.nextUrl.searchParams
 		const tokenId = searchParams.getAll('tokenId')
 		if (!tokenId) throw { message: 'No tokenName provided', status: 400 }
 
